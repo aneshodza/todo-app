@@ -1,0 +1,32 @@
+.login-container {
+  max-width: 90%;
+  margin: 0 auto;
+  justify-content: center;
+  align-items: center;
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+
+  h1 {
+    text-align: center;
+  }
+
+  form {
+    display: flex;
+    flex-direction: column;
+
+    .fields {
+      display: flex;
+      gap: 20px;
+      width: fit-content;
+    }
+
+    button {
+      margin-top: 20px;
+    }
+
+    .error {
+      color: red;
+    }
+  }
+}

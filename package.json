@@ -6,7 +6,7 @@
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
     "dev:api": "cross-env ASPNETCORE_URLS=http://localhost:5000 dotnet watch --project backend run",
-    "dev:web": "npm --prefix frontend run watch",
+    "dev:web": "npm --prefix frontend run start",
     "dev": "concurrently -n api,web -c green,cyan \"npm run dev:api\" \"npm run dev:web\""
   },
   "repository": {

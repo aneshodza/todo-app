@@ -1,0 +1,25 @@
+<mat-toolbar>
+  <a routerLink="/">
+    TODO List
+  </a>
+
+  <span class="spacer"></span>
+
+  @if (token.isLoggedIn()) {
+    <button mat-button (click)="logout()">Logout</button>
+  } @else {
+    <a mat-button
+      routerLink="/login"
+      routerLinkActive="active"
+      [routerLinkActiveOptions]="{ exact: true }">
+      Login
+    </a>
+
+    <a mat-button
+      routerLink="/register"
+      routerLinkActive="active"
+      [routerLinkActiveOptions]="{ exact: true }">
+      Register
+    </a>
+  }
+</mat-toolbar>
