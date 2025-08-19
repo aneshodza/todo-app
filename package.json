@@ -1,0 +1,29 @@
+{
+  "name": "todo-app",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "dev:api": "cross-env ASPNETCORE_URLS=http://localhost:5000 dotnet watch --project backend run",
+    "dev:web": "npm --prefix frontend run watch",
+    "dev": "concurrently -n api,web -c green,cyan \"npm run dev:api\" \"npm run dev:web\""
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/aneshodza/todo-app.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "type": "commonjs",
+  "bugs": {
+    "url": "https://github.com/aneshodza/todo-app/issues"
+  },
+  "homepage": "https://github.com/aneshodza/todo-app#readme",
+  "devDependencies": {
+    "concurrently": "^9.2.0",
+    "cross-env": "^10.0.0",
+    "wait-on": "^8.0.4"
+  }
+}

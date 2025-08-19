@@ -1,0 +1,11 @@
+<mat-list-item class="item" [class.inactive]="todo.done">
+  <div class="body">
+    <span class="urgency" [class]="todo.priority"></span>
+    <mat-checkbox [checked]="todo.done" (change)="onDoneChange($event, todo)"/>
+    <div class="content">
+      <span>
+        {{ todo.title }}
+      </span>
+    </div>
+  </div>
+</mat-list-item>

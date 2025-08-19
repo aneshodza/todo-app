@@ -1,0 +1,10 @@
+<h1>{{ title }}</h1>
+
+<mat-list class="todo-container">
+  <ng-container *ngFor="let todo of todos; let last = last">
+    <todo-item [todo]="todo"></todo-item>
+    <mat-divider *ngIf="!last"/>
+  </ng-container>
+</mat-list>
+
+<router-outlet />
