@@ -1,8 +1,17 @@
 <h1>{{ title }}</h1>
 
-<mat-list class="todo-container">
-  <ng-container *ngFor="let todo of todos; let last = last">
-    <todo-item [todo]="todo"></todo-item>
-    <mat-divider *ngIf="!last"/>
-  </ng-container>
-</mat-list>
+<ng-container *ngIf="todos$ | async as todos; else loading">
+  <mat-list class="todo-container">
+    <ng-container *ngFor="let todo of todos; let last = last">
+      <todo-item [todo]="todo"></todo-item>
+      <mat-divider *ngIf="!last" />
+    </ng-container>
+  </mat-list>
+</ng-container>
+
+<ng-template #loading>
+  <div class="loading-container">
+    <mat-spinner></mat-spinner>
+    <h3>Loading todos...</h3>
+  </div>
+</ng-template>
