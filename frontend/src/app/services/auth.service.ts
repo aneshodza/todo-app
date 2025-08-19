@@ -11,4 +11,18 @@ export class AuthService {
   login(identifier: string, password: string, rememberMe: boolean): Observable<any> {
     return this.http.post(`${this.apiUrl}/login`, { identifier, password, rememberMe });
   }
+
+  register(username: string, email: string, password: string): Observable<any> {
+    return this.http.post(`${this.apiUrl}/register`, { username, email, password });
+  }
+
+  saveToken(token: string, rememberMe: boolean): void {
+    if (rememberMe) {
+      localStorage.setItem('access_token', token);
+      sessionStorage.removeItem('access_token');
+    } else {
+      sessionStorage.setItem('access_token', token);
+      localStorage.removeItem('access_token');
+    }
+  }
 }

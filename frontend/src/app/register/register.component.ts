@@ -12,11 +12,11 @@ import { AuthService } from 'app/services/auth.service';
 import { CommonModule } from '@angular/common';
 import { MatCheckbox } from "@angular/material/checkbox";
 import { MatIconModule } from "@angular/material/icon";
-import { LoginResponse } from '@models';
+import { LoginResponse, RegisterResponse } from '@models';
 import { Router } from '@angular/router';
 
 @Component({
-  selector: 'login',
+  selector: 'register',
   standalone: true,
   imports: [
     ReactiveFormsModule,
@@ -27,15 +27,16 @@ import { Router } from '@angular/router';
     MatCheckbox,
     MatIconModule
   ],
-  templateUrl: './login.component.html',
-  styleUrl: './login.component.scss',
+  templateUrl: './register.component.html',
+  styleUrl: './register.component.scss',
 })
-export class LoginComponent {
-  loginForm = new FormGroup({
-    identifier: new FormControl('', [Validators.required]),
+export class RegisterComponent {
+  registerForm = new FormGroup({
+    username: new FormControl('', [Validators.required]),
+    email: new FormControl('', [Validators.required]),
     password: new FormControl('', [Validators.required]),
-    rememberMe: new FormControl(false),
   });
+
   hidePassword = true;
   serverError = null;
   private router = inject(Router);
@@ -43,14 +44,19 @@ export class LoginComponent {
   constructor(private authService: AuthService) { }
 
   submit() {
-    const { identifier, password, rememberMe } = this.loginForm.value;
+    const { username, email, password } = this.registerForm.value;
 
-    if (this.loginForm.invalid) return;
+    if (this.registerForm.invalid) return;
 
-    this.authService.login(identifier!, password!, rememberMe!).subscribe({
-      next: (res: LoginResponse) => {
-        this.authService.saveToken(res.accessToken, rememberMe!)
-        this.router.navigateByUrl('/', { replaceUrl: true })
+    this.authService.register(username!, email!, password!).subscribe({
+      next: (_res: RegisterResponse) => {
+        this.authService.login(email!, password!, false).subscribe({
+          next: (res: LoginResponse) => {
+            this.authService.saveToken(res.accessToken, false)
+            this.router.navigateByUrl('/', { replaceUrl: true })
+          },
+          error: (_err) => this.router.navigateByUrl('/', { replaceUrl: true })
+        })
       },
       error: (err) => this.serverError = err.error.message,
     });
