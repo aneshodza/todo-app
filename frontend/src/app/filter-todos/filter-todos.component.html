@@ -1,0 +1,10 @@
+<div class="wrapper">
+  <div class="done">
+    <mat-checkbox [checked]="filterDone" (change)="onFilterChange($event, 'filterDone')"/>
+    Only not done
+  </div>
+  <div class="urgent">
+    <mat-checkbox [checked]="filterUrgent" (change)="onFilterChange($event, 'filterUrgent')"/>
+    Only urgent
+  </div>
+</div>

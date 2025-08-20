@@ -6,43 +6,73 @@ import { TodoService } from 'app/services/todo.service';
 import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
 import { MatButtonModule } from '@angular/material/button';
 import { RouterLink } from '@angular/router';
-import { DoneChange } from '@models';
+import { DoneChange, Priority, TodoItem } from '@models';
+import { map, Observable, shareReplay } from 'rxjs';
+import { FilterTodosComponent } from 'app/filter-todos/filter-todos.component';
 
 @Component({
   selector: 'app-root',
-  imports: [TodoItemComponent, MatListModule, CommonModule, MatProgressSpinnerModule, MatButtonModule, RouterLink],
+  imports: [
+    TodoItemComponent,
+    MatListModule,
+    CommonModule,
+    MatProgressSpinnerModule,
+    MatButtonModule,
+    RouterLink,
+    FilterTodosComponent,
+  ],
   standalone: true,
   templateUrl: './todo-list.component.html',
-  styleUrl: './todo-list.component.scss'
+  styleUrl: './todo-list.component.scss',
 })
-
 export class TodoListComponent {
-  title: string = 'Your TODOs';
-  todoService = inject(TodoService)
+  todoService = inject(TodoService);
 
-  todos$ = this.todoService.index();
-  doneChanges: DoneChange[] = []
+  private allTodos$: Observable<TodoItem[]> = this.todoService.index().pipe(shareReplay(1));
+  todos$: Observable<TodoItem[]> = this.allTodos$
+  doneChanges: DoneChange[] = [];
   pushDoneChangesDebounce?: ReturnType<typeof setTimeout>;
 
+  ngOnInit() {
+    this.filter();
+  }
   collectDoneChanges(event: DoneChange) {
-    const index = this.doneChanges.findIndex(change => change.id === event.id)
+    const index = this.doneChanges.findIndex(
+      (change) => change.id === event.id,
+    );
     if (index > -1) {
-      this.doneChanges.splice(index, 1)
+      this.doneChanges.splice(index, 1);
     } else {
-      this.doneChanges.push(event)
+      this.doneChanges.push(event);
     }
 
-    clearTimeout(this.pushDoneChangesDebounce)
-    this.pushDoneChangesDebounce = setTimeout(() => this.pushDoneChanges(), 1000)
+    clearTimeout(this.pushDoneChangesDebounce);
+    this.pushDoneChangesDebounce = setTimeout(
+      () => this.pushDoneChanges(),
+      1000,
+    );
   }
 
   pushDoneChanges() {
-    if (this.doneChanges.length === 0) return
+    if (this.doneChanges.length === 0) return;
 
     this.todoService
       .markDone(this.doneChanges)
-      .subscribe({ next: () => {}, error: e => console.error(e) });
-    this.doneChanges = []
+      .subscribe({ next: () => { }, error: (e) => console.error(e) });
+    this.doneChanges = [];
   }
-}
 
+  callFilter() {
+    this.filter();
+  }
+
+  filter() {
+    const filterDone: boolean = localStorage.getItem('filterDone') === 'true'
+    const filterUrgent: boolean = localStorage.getItem('filterUrgent') === 'true'
+    this.todos$ = this.allTodos$.pipe(
+      map(todos => filterDone ? todos.filter(todo => !todo.done) : todos),
+      map(todos => filterUrgent? todos.filter(todo => todo.priority === Priority.High) : todos)
+    )
+  }
+
+}

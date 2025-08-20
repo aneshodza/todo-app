@@ -1,6 +1,6 @@
 <mat-list-item class="item" [class.inactive]="todo.done">
   <div class="body">
-    <span class="urgency" [class]="todo.priority"></span>
+    <span class="urgency" [class]="todo.priority.toLowerCase()"></span>
     <mat-checkbox [checked]="todo.done" (change)="onDoneChange($event, todo)"/>
     <div class="content">
       <span>

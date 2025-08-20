@@ -1,5 +1,6 @@
-<h1>{{ title }}</h1>
+<h1>Your TODOs</h1>
 
+<filter-todos (filterChange)="filter()"></filter-todos>
 <div class="todo-container">
   <ng-container *ngIf="todos$ | async as todos; else loading">
     <mat-list class="todo-list">
