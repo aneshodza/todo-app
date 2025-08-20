@@ -12,6 +12,7 @@ export class FilterTodosComponent {
 
   filterDone: boolean = localStorage.getItem('filterDone') === 'true'
   filterUrgent: boolean = localStorage.getItem('filterUrgent') === 'true'
+  filterPastDue: boolean = localStorage.getItem('filterPastDue') === 'true'
 
   onFilterChange(event: MatCheckboxChange, key: string) {
     localStorage.setItem(key, String(event.checked));

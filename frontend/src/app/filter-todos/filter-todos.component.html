@@ -7,4 +7,8 @@
     <mat-checkbox [checked]="filterUrgent" (change)="onFilterChange($event, 'filterUrgent')"/>
     Only urgent
   </div>
+  <div class="past-due">
+    <mat-checkbox [checked]="filterPastDue" (change)="onFilterChange($event, 'filterPastDue')"/>
+    Only past due
+  </div>
 </div>

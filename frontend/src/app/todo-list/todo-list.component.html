@@ -4,10 +4,15 @@
 <div class="todo-container">
   <ng-container *ngIf="todos$ | async as todos; else loading">
     <mat-list class="todo-list">
-      <ng-container *ngFor="let todo of todos; let last = last">
-        <todo-item [todo]="todo" (doneChangeEvent)="collectDoneChanges($event)"></todo-item>
-        <mat-divider *ngIf="!last" />
+      <ng-container *ngIf="todos.length > 0; else noTodos">
+        <ng-container *ngFor="let todo of todos; let last = last">
+          <todo-item [todo]="todo" (doneChangeEvent)="collectDoneChanges($event)"></todo-item>
+          <mat-divider *ngIf="!last" />
+        </ng-container>
       </ng-container>
+      <ng-template #noTodos>
+        <p class="no-todos">No Todos could be found</p>
+      </ng-template>
     </mat-list>
   </ng-container>
 

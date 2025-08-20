@@ -69,9 +69,20 @@ export class TodoListComponent {
   filter() {
     const filterDone: boolean = localStorage.getItem('filterDone') === 'true'
     const filterUrgent: boolean = localStorage.getItem('filterUrgent') === 'true'
+    const filterPastDue: boolean = localStorage.getItem('filterPastDue') === 'true'
     this.todos$ = this.allTodos$.pipe(
       map(todos => filterDone ? todos.filter(todo => !todo.done) : todos),
-      map(todos => filterUrgent? todos.filter(todo => todo.priority === Priority.High) : todos)
+      map(todos => filterUrgent? todos.filter(todo => todo.priority === Priority.High) : todos),
+      map(todos => filterPastDue ? todos.filter(todo => {
+        if (!todo.dueAt) return false;
+        const dueDate = new Date(todo.dueAt);
+        dueDate.setHours(0, 0, 0, 0);
+
+        const currentDate = new Date();
+        currentDate.setHours(0, 0, 0, 0);
+
+        return dueDate < currentDate;
+      }) : todos),
     )
   }
 
