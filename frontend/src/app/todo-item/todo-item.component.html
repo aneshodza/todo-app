@@ -6,6 +6,9 @@
       <span>
         {{ todo.title }}
       </span>
+      <span [class.past]="pastDueAt(todo.dueAt)">
+        {{ parseDueAt(todo.dueAt) }}
+      </span>
     </div>
   </div>
 </mat-list-item>

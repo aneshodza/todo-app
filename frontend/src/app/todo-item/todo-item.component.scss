@@ -36,7 +36,15 @@
     .content {
       height: 50px;
       display: flex;
+      flex-direction: row;
+      width: 100%;
+      padding-right: 10px;
       align-items: center;
+      justify-content: space-between;
+
+      .past {
+        color: red;
+      }
     }
   }
 }

@@ -6,5 +6,5 @@ export interface TodoItem {
   done: boolean;
   priority: Priority;
   createdAt: Date;
-  dueAt: Date | null;
+  dueAt: string | null;
 }
