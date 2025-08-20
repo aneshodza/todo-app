@@ -41,6 +41,11 @@ export class TodoCreateComponent {
 
     if (this.todoForm.invalid) return;
 
+    if (dueAt !== undefined && dueAt !== null) {
+      dueAt.setHours(0, 0, 0, 0)
+      dueAt.setDate(dueAt.getDate() + 1)
+    }
+
     this.todo.create(title!, priority!, dueAt ?? null).subscribe({
       next: (_res: TodoItem) => this.router.navigateByUrl('/todos', { replaceUrl: true }),
       error: (err) => this.serverError = err.error.message,
