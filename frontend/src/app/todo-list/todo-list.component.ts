@@ -4,10 +4,12 @@ import { TodoItemComponent } from 'app/todo-item/todo-item.component';
 import { MatListModule } from '@angular/material/list';
 import { TodoService } from 'app/services/todo.service';
 import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
+import { MatButtonModule } from '@angular/material/button';
+import { RouterLink } from '@angular/router';
 
 @Component({
   selector: 'app-root',
-  imports: [TodoItemComponent, MatListModule, CommonModule, MatProgressSpinnerModule],
+  imports: [TodoItemComponent, MatListModule, CommonModule, MatProgressSpinnerModule, MatButtonModule, RouterLink],
   standalone: true,
   templateUrl: './todo-list.component.html',
   styleUrl: './todo-list.component.scss'

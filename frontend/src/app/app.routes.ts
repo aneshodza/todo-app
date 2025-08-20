@@ -4,6 +4,7 @@ import { TodoListComponent } from './todo-list/todo-list.component';
 import { NotFoundComponent } from './not-found/not-found.component';
 import { authGuard } from './guards/auth.guard';
 import { RegisterComponent } from './register/register.component';
+import { TodoCreateComponent } from './todo-create/todo-create.component';
 
 export const routes: Routes = [
   { path: 'login', component: LoginComponent },
@@ -12,6 +13,16 @@ export const routes: Routes = [
     path: '',
     component: TodoListComponent,
     pathMatch: 'full',
+    canActivate: [authGuard]
+  },
+  {
+    path: 'todos',
+    component: TodoListComponent,
+    canActivate: [authGuard]
+  },
+  {
+    path: 'todos/create',
+    component: TodoCreateComponent,
     canActivate: [authGuard]
   },
 

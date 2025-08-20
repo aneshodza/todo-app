@@ -13,4 +13,9 @@ export class TodoService {
     return this.http
       .get<TodoItem[]>(`${this.apiUrl}`);
   }
+
+  create(title: string, priority: string, dueAt: Date | null): Observable<TodoItem> {
+    return this.http
+      .post<TodoItem>(`${this.apiUrl}/create`, { title, priority, dueAt });
+  }
 }

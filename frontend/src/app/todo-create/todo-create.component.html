@@ -1,0 +1,39 @@
+<div class="login-container">
+  <h1>Create a new Todo</h1>
+
+  <form [formGroup]="todoForm">
+    <div class="fields">
+      <mat-form-field>
+        <mat-label>Title</mat-label>
+        <input type="text" matInput formControlName="title"/>
+        <mat-error *ngIf="todoForm.get('title')?.hasError('required')">
+          Title is required
+        </mat-error>
+      </mat-form-field>
+
+      <mat-form-field>
+        <mat-label>Priority</mat-label>
+        <mat-select formControlName="priority">
+          <mat-option *ngFor="let p of priorities" [value]="p">
+            {{ p }}
+          </mat-option>
+        </mat-select>
+        <mat-error *ngIf="todoForm.get('priority')?.hasError('required')">
+          Priority is required
+        </mat-error>
+      </mat-form-field>
+    </div>
+    <mat-form-field>
+      <mat-label>Choose a date</mat-label>
+      <input
+        matInput
+        [matDatepicker]="picker"
+        formControlName="dueAt">
+      <mat-hint>MM/DD/YYYY</mat-hint>
+      <mat-datepicker-toggle matIconSuffix [for]="picker"></mat-datepicker-toggle>
+      <mat-datepicker #picker></mat-datepicker>
+    </mat-form-field>
+    <button mat-raised-button (click)="submit()">Create</button>
+    <p class="error" *ngIf="serverError !== null">{{serverError}}</p>
+  </form>
+</div>
