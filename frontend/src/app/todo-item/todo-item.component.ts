@@ -1,6 +1,6 @@
-import { Component, Input } from "@angular/core";
+import { Component, EventEmitter, Input, Output } from "@angular/core";
 import { MatListModule } from "@angular/material/list";
-import { TodoItem } from "@models";
+import { DoneChange, TodoItem } from "@models";
 import { MatCheckbox, MatCheckboxChange } from "@angular/material/checkbox";
 
 @Component({
@@ -13,9 +13,10 @@ import { MatCheckbox, MatCheckboxChange } from "@angular/material/checkbox";
 
 export class TodoItemComponent {
   @Input() todo!: TodoItem;
+  @Output() doneChangeEvent = new EventEmitter<DoneChange>();
 
   onDoneChange(event: MatCheckboxChange, todo: TodoItem) {
     todo.done = event.checked
-    console.log(event.checked, todo.title)
+    this.doneChangeEvent.emit({ id: todo.id });
   }
 }

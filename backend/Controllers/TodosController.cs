@@ -60,4 +60,22 @@ public class TodosController : ControllerBase
 
     return CreatedAtAction(nameof(Index), new {}, todo.ToDto());
   }
+
+  [HttpPatch]
+  [Route("toggle")]
+  public async Task<IActionResult> ToggleTodos([FromBody] MarkTodosAsDoneRequest req)
+  {
+    var user = await _users.GetUserAsync(User);
+
+    if (user is null) return Unauthorized();
+
+    var todos = await _context.Todos
+      .Where(t => req.Ids.Contains(t.Id))
+      .Where(t => t.OwnerId == user.Id)
+      .ExecuteUpdateAsync(s => s.SetProperty(t => t.Done, t => !t.Done));
+
+    await _context.SaveChangesAsync();
+
+    return Ok();
+  }
 }

@@ -12,8 +12,8 @@ public record TodoDto(
     DateTime CreatedAt,
     string OwnerId
     );
-
 public record CreateTodoRequest(string Title, Priority Priority, DateTime? DueAt);
+public record MarkTodosAsDoneRequest(int[] Ids);
 
 public static class TodoMappings
 {

@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { Observable } from 'rxjs';
-import { TodoItem } from '@models';
+import { DoneChange, TodoItem } from '@models';
 
 @Injectable({ providedIn: 'root' })
 export class TodoService {
@@ -17,5 +17,12 @@ export class TodoService {
   create(title: string, priority: string, dueAt: Date | null): Observable<TodoItem> {
     return this.http
       .post<TodoItem>(`${this.apiUrl}/create`, { title, priority, dueAt });
+  }
+
+  markDone(doneChanges: DoneChange[]): Observable<Object> {
+    const ids = doneChanges.map(doneChange => doneChange.id)
+
+    return this.http
+      .patch(`${this.apiUrl}/toggle`, { Ids: ids })
   }
 }

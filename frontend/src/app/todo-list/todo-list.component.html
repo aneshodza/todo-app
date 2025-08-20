@@ -4,7 +4,7 @@
   <ng-container *ngIf="todos$ | async as todos; else loading">
     <mat-list class="todo-list">
       <ng-container *ngFor="let todo of todos; let last = last">
-        <todo-item [todo]="todo"></todo-item>
+        <todo-item [todo]="todo" (doneChangeEvent)="collectDoneChanges($event)"></todo-item>
         <mat-divider *ngIf="!last" />
       </ng-container>
     </mat-list>
