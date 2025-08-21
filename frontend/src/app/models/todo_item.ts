@@ -5,6 +5,6 @@ export interface TodoItem {
   title: string;
   done: boolean;
   priority: Priority;
-  createdAt: Date;
+  createdAt: string;
   dueAt: string | null;
 }

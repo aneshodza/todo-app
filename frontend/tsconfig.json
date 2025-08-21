@@ -20,7 +20,10 @@
     "baseUrl": "src",
     "paths": {
       "@models": ["app/models/index.ts"],
-      "@models/*": ["app/models/*"]
+      "@models/*": ["app/models/*"],
+
+      "@testing": ["app/testing/index.ts"],
+      "@testing/*": ["app/testing/*"]
     }
   },
   "angularCompilerOptions": {
